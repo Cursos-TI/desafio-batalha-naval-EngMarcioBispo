@@ -1,40 +1,90 @@
 #include <stdio.h>
 
-// Desafio Batalha Naval - MateCheck
-// Este código inicial serve como base para o desenvolvimento do sistema de Batalha Naval.
-// Siga os comentários para implementar cada parte do desafio.
+#define SIZE 10 // Tamanho do tabuleiro
+
+void inicializarTabuleiro(int tabuleiro[SIZE][SIZE]) {
+    for (int i = 0; i < SIZE; i++) {
+        for (int j = 0; j < SIZE; j++) {
+            tabuleiro[i][j] = 0;
+        }
+    }
+}
+
+void exibirTabuleiro(int tabuleiro[SIZE][SIZE]) {
+    for (int i = 0; i < SIZE; i++) {
+        for (int j = 0; j < SIZE; j++) {
+            printf("%d ", tabuleiro[i][j]);
+        }
+        printf("\n");
+    }
+}
+
+void posicionarNavios(int tabuleiro[SIZE][SIZE]) {
+    // Navio horizontal
+    for (int j = 2; j < 5; j++) {
+        tabuleiro[1][j] = 3;
+    }
+    // Navio vertical
+    for (int i = 3; i < 6; i++) {
+        tabuleiro[i][4] = 3;
+    }
+    // Navio diagonal (")")
+    for (int i = 6, j = 6; i < 9; i++, j++) {
+        tabuleiro[i][j] = 3;
+    }
+    // Navio diagonal (/)
+    for (int i = 2, j = 8; i < 5; i++, j--) {
+        tabuleiro[i][j] = 3;
+    }
+}
+
+void aplicarHabilidadeCruz(int tabuleiro[SIZE][SIZE], int x, int y) {
+    for (int i = 0; i < SIZE; i++) {
+        tabuleiro[i][y] = 1;
+        tabuleiro[x][i] = 1;
+    }
+}
+
+void aplicarHabilidadeCone(int tabuleiro[SIZE][SIZE], int x, int y) {
+    for (int i = x; i < SIZE && (i - x) < 3; i++) {
+        for (int j = y - (i - x); j <= y + (i - x) && j < SIZE; j++) {
+            if (j >= 0)
+                tabuleiro[i][j] = 1;
+        }
+    }
+}
+
+void aplicarHabilidadeOctaedro(int tabuleiro[SIZE][SIZE], int x, int y) {
+    for (int i = -2; i <= 2; i++) {
+        for (int j = -2; j <= 2; j++) {
+            if (x + i >= 0 && x + i < SIZE && y + j >= 0 && y + j < SIZE && abs(i) + abs(j) <= 2) {
+                tabuleiro[x + i][y + j] = 1;
+            }
+        }
+    }
+}
 
 int main() {
-    // Nível Novato - Posicionamento dos Navios
-    // Sugestão: Declare uma matriz bidimensional para representar o tabuleiro (Ex: int tabuleiro[5][5];).
-    // Sugestão: Posicione dois navios no tabuleiro, um verticalmente e outro horizontalmente.
-    // Sugestão: Utilize `printf` para exibir as coordenadas de cada parte dos navios.
-
-    // Nível Aventureiro - Expansão do Tabuleiro e Posicionamento Diagonal
-    // Sugestão: Expanda o tabuleiro para uma matriz 10x10.
-    // Sugestão: Posicione quatro navios no tabuleiro, incluindo dois na diagonal.
-    // Sugestão: Exiba o tabuleiro completo no console, mostrando 0 para posições vazias e 3 para posições ocupadas.
-
-    // Nível Mestre - Habilidades Especiais com Matrizes
-    // Sugestão: Crie matrizes para representar habilidades especiais como cone, cruz, e octaedro.
-    // Sugestão: Utilize estruturas de repetição aninhadas para preencher as áreas afetadas por essas habilidades no tabuleiro.
-    // Sugestão: Exiba o tabuleiro com as áreas afetadas, utilizando 0 para áreas não afetadas e 1 para áreas atingidas
-
-    // Exemplos de exibição das habilidades:
-    // Exemplo para habilidade em cone:
-    // 0 0 1 0 0
-    // 0 1 1 1 0
-    // 1 1 1 1 1
+    int tabuleiro[SIZE][SIZE];
+    inicializarTabuleiro(tabuleiro);
     
-    // Exemplo para habilidade em octaedro:
-    // 0 0 1 0 0
-    // 0 1 1 1 0
-    // 0 0 1 0 0
-
-    // Exemplo para habilidade em cruz:
-    // 0 0 1 0 0
-    // 1 1 1 1 1
-    // 0 0 1 0 0
-
+    // Nível Novato - Posicionamento dos Navios
+    posicionarNavios(tabuleiro);
+    printf("Tabuleiro com navios:\n");
+    exibirTabuleiro(tabuleiro);
+    
+    // Nível Mestre - Aplicação de habilidades
+    printf("\nHabilidade Cruz aplicada no centro:\n");
+    aplicarHabilidadeCruz(tabuleiro, SIZE/2, SIZE/2);
+    exibirTabuleiro(tabuleiro);
+    
+    printf("\nHabilidade Cone aplicada no topo:\n");
+    aplicarHabilidadeCone(tabuleiro, 0, SIZE/2);
+    exibirTabuleiro(tabuleiro);
+    
+    printf("\nHabilidade Octaedro aplicada no meio:\n");
+    aplicarHabilidadeOctaedro(tabuleiro, SIZE/2, SIZE/2);
+    exibirTabuleiro(tabuleiro);
+    
     return 0;
 }
