@@ -68,7 +68,7 @@ int main() {
     int tabuleiro[SIZE][SIZE];
     inicializarTabuleiro(tabuleiro);
     
-    // Nível Novato - Posicionamento dos Navios.
+    // Nível Novato - Posicionamento dos Navios
     posicionarNavios(tabuleiro);
     printf("Tabuleiro com navios:\n");
     exibirTabuleiro(tabuleiro);
