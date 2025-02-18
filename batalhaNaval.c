@@ -68,12 +68,12 @@ int main() {
     int tabuleiro[SIZE][SIZE];
     inicializarTabuleiro(tabuleiro);
     
-    // Nível Novato - Posicionamento dos Navios
+    // Nível Novato - Posicionamento dos Navios.
     posicionarNavios(tabuleiro);
     printf("Tabuleiro com navios:\n");
     exibirTabuleiro(tabuleiro);
     
-    // Nível Mestre - Aplicação de habilidades
+    // Nível Mestre - Aplicação de habilidades.
     printf("\nHabilidade Cruz aplicada no centro:\n");
     aplicarHabilidadeCruz(tabuleiro, SIZE/2, SIZE/2);
     exibirTabuleiro(tabuleiro);
