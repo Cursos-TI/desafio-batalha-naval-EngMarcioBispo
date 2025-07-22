@@ -1,6 +1,6 @@
 #include <stdio.h>
 
-#define SIZE 10
+#define SIZE 10.
 
 void inicializarTabuleiro(int tabuleiro[SIZE][SIZE]) {
     for (int i = 0; i < SIZE; i++) {
